@@ -22,19 +22,30 @@
 *  @license   http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
 *
 *}
-<div class="content">
-    <div class="product_tab">
-        {foreach from=$ticketing_products item=product}
 
-            <!-- Image path -->
-            {assign var='uri' value='/'|explode:$request_uri}
-            Image path: <img src="{$base_dir}/{$uri[1]}/img/p/{$product['id_image'][0]}/{$product['id_image'][1]}/{$product['id_image']}.jpg" style="max-width:150px;"><br/>
+{foreach from=$ticketing_products item=product}
 
-            ID: {$product["id_product"]}<br/>
-            {l s='Product name' mod='ps_ticketing'}: {$product["name"]}<br/>
-            Descripcion: {$product["description_short"]}<br/>
-            Imagen: {$product["id_image"]}<br/>
+    <div class="container-fluid">
+        <div class="module-item-wrapper-list row">
+            <div class="col-sm-12 col-md-12 col-lg-1 text-sm-center">
+                <div class="module-logo-thumb-list">
+                    <!-- Image path -->
+                    {assign var='uri' value='/'|explode:$request_uri}
+                    <img src="{$base_dir}/{$uri[1]}/img/p/{$product['id_image'][0]}/{$product['id_image'][1]}/{$product['id_image']}.jpg" class="text-md-center" alt="{$product["name"]}" style="max-width: 85px;">
+                </div>
+            </div>
+            <div class="col-md-12 col-lg-11 row">
+                <div class="col-sm-12 col-md-10 col-lg-11">
+                    <h3 class="text-ellipsis module-name-list" data-toggle="pstooltip" data-placement="top" title="" data-original-title="{$product["name"]}">
+                        {$product["name"]} <b>({$product["id_product"]})<b/>
+                    </h3>
+                </div>
 
-        {/foreach}
+                <div class="col-sm-12 col-md-8 col-lg-7">
+                    {$product["description_short"]}
+                </div>
+            </div>
+        </div>
     </div>
-</div>
+
+{/foreach}
