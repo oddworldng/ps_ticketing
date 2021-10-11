@@ -34,4 +34,6 @@
 		{l s='It is applied to most products and which are not included in the other categories.' mod='ps_igic'}
 		{l s='In the rest of Spain is 21%.' mod='ps_igic'}
 	</p>
+    Variable 1: {$variable1}
+    Base URL: {$variable2}
 </div>

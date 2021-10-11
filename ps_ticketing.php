@@ -81,8 +81,17 @@ class Ps_Ticketing extends Module
         $this->context->controller->addJs($this->_path . 'views/js/admin.js');
     }
 
+    /* Admin config page */
     public function getContent()
     {
+        
+        $this->context->smarty->assign(
+            [
+                'module_base' => $this->context->link->getModuleLink($this->name, 'display'),
+                'variable1' => 1
+            ]
+        );
+        
         return $this->display(__FILE__, 'views/templates/admin/template.tpl');
     }
 
