@@ -81,6 +81,19 @@ class Model
         ));
     }
 
+    /* Delete product if uncheck from admin product page */
+    public function delProduct($id)
+    {
+        $sql = '
+            DELETE FROM '._DB_PREFIX_.'ticketing_products
+            WHERE `id_product`='.(int)$id.'
+        ';
+
+        Db::getInstance()->ExecuteS($sql);
+
+        return true;
+    }
+
     public function is_checked($id)
     {
         $sql = '

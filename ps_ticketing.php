@@ -46,6 +46,7 @@ class Ps_Ticketing extends Module
         $this->ps_versions_compliancy = ['min' => '1.7.2.0', 'max' => _PS_VERSION_];
         parent::__construct();
     }
+
     /* INSTALL */
     public function install()
     {
@@ -60,6 +61,7 @@ class Ps_Ticketing extends Module
             && $this->registerHook('actionAdminControllerSetMedia');
 
     }
+
     /* UNINSTALL */
     public function uninstall()
     {
@@ -72,37 +74,59 @@ class Ps_Ticketing extends Module
             && $this->unregisterHook('actionProductSave')
             && $this->unregisterHook('actionAdminControllerSetMedia');
     }
+
+    /* Hooks */
     public function hookActionAdminControllerSetMedia($params)
     {
         $this->context->controller->addJs($this->_path . 'views/js/admin.js');
     }
+
     public function getContent()
     {
         return $this->display(__FILE__, 'views/templates/admin/template.tpl');
     }
-    /* Hooks */
+
     public function hookDisplayAdminProductsMainStepLeftColumnBottom(array $params)
     {
         return $this->display(__FILE__, 'views/templates/hook/admin.tpl');
     }
+
     public function hookActionProductSave($params)
     {
         include "classes/db.php";
         $db = new Model();
 
         // Get product ID
-        $id = Tools::getValue('id_product');
+        $id_product = Tools::getValue('id_product');
         // Get if user has checked for ticketing in this product
         $is_checked = Tools::getValue('ticketingProductChecked');
-        // Get if product it was checked
-        $was_checked = $db->is_checked($id);
 
-        $db->dump_db($is_checked);
-        // Save values into data base
-        $db->saveProduct($id, $is_checked);
+        // Get if product it was checked
+        $active_status = $db->is_checked($id_product);
+
+        // If product was active, and check is 0 while saving product: delete
+        if ($active_status == "1") {
+            if ($is_checked != "1") {
+                // Delete values from data base
+                $db->delProduct($id_product);
+            }
+
+        // If product was not active, and check is 1 while saving product: add
+        } else {
+            if ($is_checked == "1") {
+                // Save values into data base
+                $db->saveProduct($id_product, $is_checked);
+            }
+        }
+            
+        // Debug variables
+        $db->dump_db($active_status);
+        
+
         return true;
 
     }
+
     /* Install DB */
     public function installDb()
     {
