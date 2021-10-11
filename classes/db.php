@@ -94,6 +94,22 @@ class Model
         return true;
     }
 
+    /* Get all products */
+    public function getProducts()
+    {
+        $sql = '
+            SELECT *
+            FROM `'._DB_PREFIX_.'ticketing_products`
+            LEFT JOIN `'._DB_PREFIX_.'image_shop`
+            ON `'._DB_PREFIX_.'ticketing_products`.id_product = `'._DB_PREFIX_.'image_shop`.id_product
+            LEFT JOIN `'._DB_PREFIX_.'product_lang`
+            ON `'._DB_PREFIX_.'ticketing_products`.id_product = `'._DB_PREFIX_.'product_lang`.id_product
+        ';
+        $value = Db::getInstance()->ExecuteS($sql);
+
+        return $value;
+    }
+
     public function is_checked($id)
     {
         $sql = '

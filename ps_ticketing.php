@@ -85,10 +85,18 @@ class Ps_Ticketing extends Module
     public function getContent()
     {
         
+        include "classes/db.php";
+        $db = new Model();
+
+        /* Get all products selected for ticketing*/
+        $ticketing_products = $db->getProducts();
+        
         $this->context->smarty->assign(
             [
-                'module_base' => $this->context->link->getModuleLink($this->name, 'display'),
-                'variable1' => 1
+                'ticketing_products' => $ticketing_products,
+                'img_dir'            => _PS_PROD_IMG_DIR_,
+                'base_dir'           => "http://" . $_SERVER['SERVER_NAME'],
+                'request_uri'        => $_SERVER['REQUEST_URI']
             ]
         );
         

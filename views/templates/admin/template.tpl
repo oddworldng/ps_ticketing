@@ -22,18 +22,19 @@
 *  @license   http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
 *
 *}
-<div id="content">
-	<h1>{l s='This module neednt configuration.' mod='ps_igic'}</h1>
-	<p>
-		<strong>{l s='IGIC Reduced rate (3%)' mod='ps_igic'}</strong>:
-		{l s='It applies to mining, chemical industry, textile, wood, paper,' mod='ps_igic'}
-		{l s='to ground transportation and vehicle repair. In the rest of Spain is 10%.' mod='ps_igic'}
-	</p>
-	<p>
-		<strong>{l s='IGIC Standard rate (7%)' mod='ps_igic'}</strong>:
-		{l s='It is applied to most products and which are not included in the other categories.' mod='ps_igic'}
-		{l s='In the rest of Spain is 21%.' mod='ps_igic'}
-	</p>
-    Variable 1: {$variable1}
-    Base URL: {$variable2}
+<div class="content">
+    <div class="product_tab">
+        {foreach from=$ticketing_products item=product}
+
+            <!-- Image path -->
+            {assign var='uri' value='/'|explode:$request_uri}
+            Image path: <img src="{$base_dir}/{$uri[1]}/img/p/{$product['id_image'][0]}/{$product['id_image'][1]}/{$product['id_image']}.jpg" style="max-width:150px;"><br/>
+
+            ID: {$product["id_product"]}<br/>
+            {l s='Product name' mod='ps_ticketing'}: {$product["name"]}<br/>
+            Descripcion: {$product["description_short"]}<br/>
+            Imagen: {$product["id_image"]}<br/>
+
+        {/foreach}
+    </div>
 </div>
