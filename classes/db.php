@@ -33,10 +33,9 @@ class Model
         $sql = '
             CREATE TABLE IF NOT EXISTS `' . _DB_PREFIX_ . 'ticketing_products` (
                 `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-                `id_product` INT( 11 ) UNSIGNED NOT NULL,
-                `is_active` boolean NOT NULL,
-                PRIMARY KEY (`id`),
-                UNIQUE (`id_product`)
+                `id_product` INT(11) UNSIGNED NOT NULL,
+                `is_active` varchar(255) NOT NULL,
+                PRIMARY KEY (`id`)
             ) ENGINE=' . _MYSQL_ENGINE_ . ' DEFAULT CHARSET=utf8
         ';
         $value = Db::getInstance()->ExecuteS($sql);
@@ -73,12 +72,12 @@ class Model
     }
 
     /* Save if product is checked or unchecked */
-    public function saveProduct($id, $is_checked)
+    public function saveProduct($id, $active)
     {
         Db::getInstance()->insert('ticketing_products', array(
             'id'                => (int)'',
             'id_product'        => pSQL($id),
-            'is_active'         => pSQL($is_cheked),
+            'is_active'         => pSQL($active)
         ));
     }
 
@@ -97,7 +96,7 @@ class Model
     {
         Db::getInstance()->insert('ticketing_dump', array(
             'id'                => (int)'',
-            'dump'              => pSQL($dump),
+            'dump'              => pSQL($dump)
         ));
     }
 

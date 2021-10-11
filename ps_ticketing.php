@@ -57,7 +57,6 @@ class Ps_Ticketing extends Module
             /* This hook is called while saving products */
             && $this->registerHook('actionProductSave')
             /* To add JS and CSS file in Backoffice */
-            //&& $this->registerHook('displayBackOfficeHeader')
             && $this->registerHook('actionAdminControllerSetMedia');
 
     }
@@ -71,33 +70,9 @@ class Ps_Ticketing extends Module
             /* Unregister Hooks */
             && $this->unregisterHook('displayAdminProductsMainStepLeftColumnBottom')
             && $this->unregisterHook('actionProductSave')
-            //&& $this->unregisterHook('displayBackOfficeHeader')
             && $this->unregisterHook('actionAdminControllerSetMedia');
     }
-    /*public function hookDisplayBackOfficeHeader()
-    {
-        $script = '
-            <script>
-                $(document).ready( function () {
-
-                    function ticketingCheck(){
-                        // Get the checkbox
-                        var checkBox = document.getElementById("ticketingProductChecked");
-
-                        // If the checkbox is checked, change value
-                        if (checkBox.value == "0"{
-                            checkBox.value = "1";
-                        } else {
-                            checkBox.value = "0";
-                        }
-                    }
-
-                });
-            </script>
-        ';
-        return $script;
-    }*/
-    public function hookActionAdminControllerSetMedia()
+    public function hookActionAdminControllerSetMedia($params)
     {
         $this->context->controller->addJs($this->_path . 'views/js/admin.js');
     }
@@ -110,7 +85,7 @@ class Ps_Ticketing extends Module
     {
         return $this->display(__FILE__, 'views/templates/hook/admin.tpl');
     }
-    public function hookActionProductSave()
+    public function hookActionProductSave($params)
     {
         include "classes/db.php";
         $db = new Model();
@@ -118,10 +93,11 @@ class Ps_Ticketing extends Module
         // Get product ID
         $id = Tools::getValue('id_product');
         // Get if user has checked for ticketing in this product
-        $is_checked = Tools::getValue('ticketing_product_checked');
+        $is_checked = Tools::getValue('ticketingProductChecked');
         // Get if product it was checked
         $was_checked = $db->is_checked($id);
-        $db->dump_db($was_checked);
+
+        $db->dump_db($is_checked);
         // Save values into data base
         $db->saveProduct($id, $is_checked);
         return true;

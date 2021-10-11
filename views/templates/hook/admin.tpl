@@ -26,8 +26,9 @@
 <div class="required-custom-field">
     <h2>Vender entradas</h2>
     <div class="checkbox">
-        <img id="ticketingProductImg" src="../../../../../modules/ps_ticketing/views/img/down.png" style="width:35px;" onclick="ticketingCheck();">
-        <input type="hidden" id="ticketingProductChecked" name="ticketingProductChecked" value="0">
+        <input type="checkbox" name="ticketingProductChecked" id="ticketingProductChecked" value="0" onclick="ticketingCheck();">
     </div>
 </div>
+
+
 
